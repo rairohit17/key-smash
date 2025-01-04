@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+--white:#ffff;
+--black:#1d1e1b ;
+--blue:#109ac9 ;
+--grey:#888;
+--darkgray:#1b1b1b;
+--green:#50C878;
+--red:#f94141;
+
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--black);
+  color:var(--white);
+  font-family: "Inter", serif;
+  /* height: 200vh; */
+  /* overflow: hidden; */
+
+}
+
+::selection{
+  background-color: var(--red);
+  color: var(white);
+}
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--black);
+  /* box-shadow: inset 0 0 5px green; */
+  border-radius: 20px;
+
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--black);
+  border-radius: 20px;
+}
+
+/* Hide scrollbar but allow scrolling */
+ .drawer-style{
+  background-color: var(--black);
+  color: white;
+  height: 100vh;
+  padding: 20px;
+
+ }
+ .stroke:hover{
+ 
+    color: black;
+    -webkit-text-fill-color: var(--black); /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
+    animation-duration: 300ms;
+  
+ }
+ .stroke {
+  transition: color 300ms, -webkit-text-fill-color 300ms, -webkit-text-stroke-width 300ms, -webkit-text-stroke-color 300ms;
+}
