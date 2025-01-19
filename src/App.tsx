@@ -6,12 +6,13 @@ import Header from './components/Header'
 import LandingPage from './pages/LandingPage'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 
+
 function App() {
   
 
   return (
     
-      <div  >
+      <div style={{ maxWidth: `${window.innerWidth}px` }} >
         <Header></Header>
         
         <BrowserRouter>

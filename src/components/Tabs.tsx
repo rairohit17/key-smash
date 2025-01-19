@@ -5,6 +5,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { createTheme, ThemeProvider } from '@mui/material'; // Add ThemeProvider import
+import GridCard from './GridCard';
 
 function CustomTabs({data}:any ) {
   const [value, setValue] = React.useState('grid');
@@ -38,14 +39,18 @@ function CustomTabs({data}:any ) {
             </TabList>
           </div>
           <TabPanel value="grid">
+            <div className='flex flex-wrap  justify-between gap-5 sm:mx-[80px] mx-[20px]'>
             {data.map((element:any,index:number)=>{
                 return (
                     <div key={index}>
-                        {index+1}{element.name}
+                        <GridCard value={element}></GridCard>
+                        
                     </div>
+                    
 
                 )
             })}
+            </div>
           </TabPanel>
           <TabPanel value="list">Item Two
             mapping for lists

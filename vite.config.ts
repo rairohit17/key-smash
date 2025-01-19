@@ -7,5 +7,7 @@ export default defineConfig({
     watch: {
       usePolling: true, // Enables polling to detect file changes reliably
     },
+    host: '0.0.0.0', // Makes the app accessible on the network
+    port: 5173, 
   },
 });

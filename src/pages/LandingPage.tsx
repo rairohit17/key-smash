@@ -4,6 +4,7 @@ import gradient from "../assets/gradient.png";
 import {motion} from "framer-motion"
 
 const LandingPage = () => {
+  
   return (
     <div className="flex sm:flex-row flex-col">
       <div className="pt-5 mt-[50px] pl-6 sm:w-[65%] w-full">
@@ -23,7 +24,7 @@ const LandingPage = () => {
         </motion.div>
       </div>
       
-      <div className="  relative py-[50px] ml-2">
+      <div className="  relative py-[50px] ml-2 mb-5">
         <div className="relative">
           <motion.img  
             initial={{y:10}}
