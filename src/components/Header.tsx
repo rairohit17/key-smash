@@ -12,7 +12,7 @@ const Header = (props: Props) => {
             <a  className=" hover:text-white p-[10px] transition duration-500 hover:text[var(--white)] hidden md:inline-block" href="">Watchlist</a>
             <a  className=" hover:text-white p-[10px] transition duration-500 hover:text[var(--white)] hidden md:inline-block" href="">Compare</a>
 
-            <button className='bg-[#33b249] w-[150px] text-[white] p-[5px] rounded-[80px]   transition duration-300 hidden md:inline-block hover:shadow-sm  hover:shadow-[var(--green)]'>
+            <button className='bg-[#33b249] w-[150px] text-[white]  rounded-[80px] h-[45px]   transition duration-300 hidden md:inline-block hover:shadow-sm  hover:shadow-[var(--green)]'>
             <a  className='  hover:text-white p-[10px] transition duration-500 hover:text[var(--white)] hidden md:inline-block' href="">Dashboard</a>
             </button>
            
