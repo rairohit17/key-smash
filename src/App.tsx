@@ -1,10 +1,7 @@
-
-import Dashboard from './pages/Dashboard'
-import './App.css'
-import Footer from './components/Footer'
 import Header from './components/Header'
-import LandingPage from './pages/LandingPage'
-import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import './App.css'
+import Typing from './components/Typing'
+
 
 
 function App() {
@@ -12,24 +9,9 @@ function App() {
 
   return (
     
-      <div style={{ maxWidth: `${window.innerWidth}px` }} >
+      <div  >
         <Header></Header>
-        
-        <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<LandingPage/>}></Route>
-          
-          <Route path='/dashboard' element={<Dashboard/>}></Route>
-          <Route path='/' element={<LandingPage/>}></Route>
-
-
-
-        </Routes>
-        </BrowserRouter>
-        {/* <LandingPage></LandingPage> */}
-        <Footer></Footer>
-        
-        
+        <Typing></Typing>
         
         
         </div>

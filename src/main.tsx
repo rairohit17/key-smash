@@ -6,7 +6,9 @@ import dotenv from "dotenv";
 // dotenv.config();
 
 createRoot(document.getElementById('root')!).render(
-  
-    <App />
+    <StrictMode>
+         <App />
+    </StrictMode>
+   
   
 )
