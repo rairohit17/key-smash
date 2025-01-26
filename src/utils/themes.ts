@@ -59,8 +59,8 @@ const themes = [
         name: "high-contract",
         background: "black", // Pinkish-purple
         primary: "white",      // White text
-        secondary: "white",    // White heading
-        right: "green",        // Green for correct
+        secondary: "white",    
+        right: "green",        
         wrong: "red",     
 
     },

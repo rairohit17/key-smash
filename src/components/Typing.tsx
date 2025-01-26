@@ -1,5 +1,5 @@
 import {generate} from "random-words"
-import { useState,useRef, useEffect, MouseEventHandler } from "react"
+import { useState,useRef, useEffect,} from "react"
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
@@ -19,7 +19,6 @@ function Typing(){
     const [rightWords,setRightWords] = useState(0);
     const [rightCharOfWord,setRightCharOfWord] = useState(0);
     
-
     function updateWordsArray(){
         const array  = generate(50) as string[];
         setWordsArray(array);
