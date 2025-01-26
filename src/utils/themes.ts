@@ -63,6 +63,15 @@ const themes = [
         right: "green",        // Green for correct
         wrong: "red",     
 
-    }
+    },
+    {
+        name: "midnight",
+        background: "#0c0c15", // Pinkish-purple
+        primary: "#313551",      // White text
+        secondary: "white",    // White heading
+        right: "#878ba8",        // Green for correct
+        wrong: "#a95b52",     
+
+    },
 ];
 export default themes

@@ -1,8 +1,7 @@
 import {generate} from "random-words"
-import { useState,useRef, useEffect } from "react"
+import { useState,useRef, useEffect, MouseEventHandler } from "react"
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { setEngine } from "crypto";
 
 
 function Typing(){
@@ -14,6 +13,12 @@ function Typing(){
     const [currCharIndex,setCurrCharIndex]= useState(0)
     const [currTime,setCurrentTime]=useState(15)
     const [isActive,setIsActive]= useState(false)
+    const [intervalId,setIntervalId]= useState<NodeJS.Timeout |null>( null)
+    const [rightChar,setRightChar] = useState(0);
+    const [currInterval,setCurrInterval]= useState(15)
+    const [rightWords,setRightWords] = useState(0);
+    const [rightCharOfWord,setRightCharOfWord] = useState(0);
+    
 
     function updateWordsArray(){
         const array  = generate(50) as string[];
@@ -24,15 +29,25 @@ function Typing(){
    useEffect(()=>{
     updateWordsArray()
    },[])
+   useEffect(()=>{
+    if (currWordIndex==0 && currCharIndex>0){
+        setIsActive(true)
+    }
+
+    
+   },[currCharIndex])
 
    useEffect(()=>{
     if (currTime<=0 || !isActive){
+        console.log(wordsPerMinute(currInterval))
+        console.log(rightWords)
         return;
     }
     const interval = setInterval(()=>{
             setCurrentTime((currTime)=>currTime-1)
 
     },1000)
+    setIntervalId(interval )
     return ()=> clearInterval(interval)
    },[currTime,isActive])
    useEffect(()=>{
@@ -69,7 +84,7 @@ function Typing(){
 
     function handleUserInput(event: React.KeyboardEvent<HTMLInputElement>){
         
-        console.log(currCharIndex)
+        // console.log(currCharIndex)
         let allCurrChar  = wordsArrayRef.current[currWordIndex]?.childNodes as NodeListOf<HTMLSpanElement>   
     
         let targetElement=allCurrChar[currCharIndex] as HTMLSpanElement
@@ -87,7 +102,7 @@ function Typing(){
                 // console.log(allCurrChar.length)
 
                 if ((currCharIndex) ==allCurrChar.length){
-                    console.log([currCharIndex,currWordIndex])
+                    // console.log([currCharIndex,currWordIndex])
                     
                     allCurrChar[currCharIndex-1].classList.remove("end-of-char")
                     allCurrChar[currCharIndex-1].style.color=""
@@ -122,7 +137,9 @@ function Typing(){
         if (currCharIndex == (allCurrChar.length) && event.key==' '){
             const lastCharOfCurrentWord = wordsArrayRef.current[currWordIndex]?.childNodes[allCurrChar.length - 1] as HTMLSpanElement
             lastCharOfCurrentWord?.classList.remove("end-of-char")
-    
+
+            if (wordsArrayRef.current[currWordIndex]?.childNodes.length==rightCharOfWord) setRightWords(rightWords+1)
+                setRightCharOfWord(0);
             setCurrWordIndex(currWordIndex+1)
             let newTarget=wordsArrayRef.current[currWordIndex+1]?.childNodes[0] as HTMLSpanElement
             newTarget.classList.add("current");
@@ -132,7 +149,8 @@ function Typing(){
     
         if(event.key==allCurrChar[currCharIndex].innerText){
             allCurrChar[currCharIndex].style.color= theme.right
-            setCurrCharIndex(currCharIndex+1)
+            setCurrCharIndex(currCharIndex+1); setRightChar(rightChar+1)
+            setRightCharOfWord(rightCharOfWord+1)
             allCurrChar[currCharIndex+1].classList.add("current")
         }
         else if ( event.key!= allCurrChar[currCharIndex].innerText){
@@ -142,21 +160,45 @@ function Typing(){
         }
     }
 
+    function handleTimer(e:React.MouseEvent<HTMLDivElement>){
+        setCurrentTime(parseInt(e.currentTarget.id)); 
+        setCurrInterval(parseInt(e.currentTarget.id))
+        // setIsActive(true); 
+        setIsActive(false)
+        myElementRef.current?.focus()
+        updateWordsArray()
+        if(intervalId!=null){
+            clearInterval(intervalId)
+        }
+        setRightChar(0)
+        setRightWords(0);
+        setRightCharOfWord(0)
+        
+    }
+    function getAccuracy(){
+        return Math.round((rightWords/currWordIndex)*100)
+    }
+    function wordsPerMinute(time:number){
+        let wpm = (rightChar*60)/(5*time)
+        return Math.round(wpm);
+        
+    }
+
     return (
         <div>
             <div className="flex justify-between mb-[50px]">
-            <div className="ml-[15%] text-4xl" onClick={()=>setIsActive(true)}>Timer:{currTime}</div>
+            <div className="ml-[15%] text-4xl cursor-pointer" onClick={()=>{setIsActive(true);myElementRef.current?.focus()} }>Timer:{currTime}</div>
             <div className="mr-[15%] flex gap-4 text-3xl">
-                <div onClick={()=>{setCurrentTime(15); setIsActive(true)}} className="hover:cursor-pointer">15s</div>
-                <div onClick={()=>{setCurrentTime(30); setIsActive(true)}}className="hover:cursor-pointer">30s</div>
-                <div  onClick={()=>{setCurrentTime(45); setIsActive(true)}} className="hover:cursor-pointer">45s</div>
+                <div onClick={(e)=>handleTimer(e)} id="15" className="hover:cursor-pointer">15s</div>
+                <div onClick={(e)=>handleTimer(e)} id="30"className="hover:cursor-pointer">30s</div>
+                <div  onClick={(e)=>handleTimer(e)} id="45" className="hover:cursor-pointer">45s</div>
             </div>
             </div>
         <div onClick={handleDivClick} 
-         className="flex-wrap text-wrap break-words whitespace-normal mx-auto max-w-[800px] overflow-wrap-break-word flex">
+         className="flex-wrap text-wrap break-words whitespace-normal mx-auto max-w-[1000px] overflow-wrap-break-word flex">
             {wordsArray.map((text,index)=>{
                 return (
-                    <div key={index} className="pr-4 text-2xl font-serif" ref={(element)=>{
+                    <div key={index} className="pr-4 text-2xl font-serif " ref={(element)=>{
                                                                 wordsArrayRef.current[index]= element
                     }} >
                         {text.split("").map((char)=>{
