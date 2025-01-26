@@ -2,7 +2,7 @@
 
 function Header (){
     return (
-        <div className=" flex-center justify-between text-center">
+        <div className=" flex-center justify-between text-center h-auto">
             Header</div>
     )
 }

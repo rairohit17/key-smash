@@ -1,5 +1,9 @@
 import {generate} from "random-words"
 import { useState,useRef, useEffect } from "react"
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { setEngine } from "crypto";
+
 
 function Typing(){
     const myElementRef = useRef<HTMLInputElement>(null);
@@ -8,22 +12,37 @@ function Typing(){
 
     const [currWordIndex,setCurrWordIndex]= useState(0)
     const [currCharIndex,setCurrCharIndex]= useState(0)
+    const [currTime,setCurrentTime]=useState(15)
+    const [isActive,setIsActive]= useState(false)
 
     function updateWordsArray(){
         const array  = generate(50) as string[];
         setWordsArray(array);
    }
+   const theme = useSelector((state:RootState)=>state.theme)
 
    useEffect(()=>{
     updateWordsArray()
    },[])
 
    useEffect(()=>{
+    if (currTime<=0 || !isActive){
+        return;
+    }
+    const interval = setInterval(()=>{
+            setCurrentTime((currTime)=>currTime-1)
+
+    },1000)
+    return ()=> clearInterval(interval)
+   },[currTime,isActive])
+   useEffect(()=>{
     // Reset all classes before setting up initial state
     wordsArrayRef.current.forEach((wordElement) => {
         if (wordElement) {
             Array.from(wordElement.children).forEach((charElement) => {
-                charElement.classList.remove("current", "end-of-char", "text-[var(--green)]", "text-[var(--red)]")
+                
+                charElement.classList.remove("current", "end-of-char");
+                (charElement as HTMLSpanElement).style.color=""
             })
         }
     })
@@ -49,6 +68,7 @@ function Typing(){
     }
 
     function handleUserInput(event: React.KeyboardEvent<HTMLInputElement>){
+        
         console.log(currCharIndex)
         let allCurrChar  = wordsArrayRef.current[currWordIndex]?.childNodes as NodeListOf<HTMLSpanElement>   
     
@@ -60,6 +80,9 @@ function Typing(){
         }
           // handle BACKSPACE 
           if (event.key == "Backspace"){
+            if(currCharIndex==0 && currWordIndex==0){ 
+                targetElement.classList.add("current")
+                return };
             if(currCharIndex!=0){
                 // console.log(allCurrChar.length)
 
@@ -67,12 +90,13 @@ function Typing(){
                     console.log([currCharIndex,currWordIndex])
                     
                     allCurrChar[currCharIndex-1].classList.remove("end-of-char")
-                    allCurrChar[currCharIndex-1].className="current"
+                    allCurrChar[currCharIndex-1].style.color=""
+                    allCurrChar[currCharIndex-1].className="current pl-[2px]"
                     setCurrCharIndex(currCharIndex-1)
                     return;
                 }
-                
-                allCurrChar[currCharIndex-1].className=""
+                allCurrChar[currCharIndex-1].style.color=""
+                allCurrChar[currCharIndex-1].className="pl-[2px]"
                 allCurrChar[currCharIndex-1].classList.add("current")
                 setCurrCharIndex(currCharIndex-1)
             }
@@ -107,12 +131,12 @@ function Typing(){
         }
     
         if(event.key==allCurrChar[currCharIndex].innerText){
-            allCurrChar[currCharIndex].classList.add("text-[var(--green)]")
+            allCurrChar[currCharIndex].style.color= theme.right
             setCurrCharIndex(currCharIndex+1)
             allCurrChar[currCharIndex+1].classList.add("current")
         }
         else if ( event.key!= allCurrChar[currCharIndex].innerText){
-            allCurrChar[currCharIndex].classList.add("text-[var(--red)]")
+            allCurrChar[currCharIndex].style.color=theme.wrong
             setCurrCharIndex(currCharIndex+1)
             allCurrChar[currCharIndex+1].classList.add("current")
         }
@@ -120,16 +144,24 @@ function Typing(){
 
     return (
         <div>
+            <div className="flex justify-between mb-[50px]">
+            <div className="ml-[15%] text-4xl" onClick={()=>setIsActive(true)}>Timer:{currTime}</div>
+            <div className="mr-[15%] flex gap-4 text-3xl">
+                <div onClick={()=>{setCurrentTime(15); setIsActive(true)}} className="hover:cursor-pointer">15s</div>
+                <div onClick={()=>{setCurrentTime(30); setIsActive(true)}}className="hover:cursor-pointer">30s</div>
+                <div  onClick={()=>{setCurrentTime(45); setIsActive(true)}} className="hover:cursor-pointer">45s</div>
+            </div>
+            </div>
         <div onClick={handleDivClick} 
-         className="flex-wrap text-wrap break-words whitespace-normal mx-auto max-w-[600px] mt-[200px] overflow-wrap-break-word flex">
+         className="flex-wrap text-wrap break-words whitespace-normal mx-auto max-w-[800px] overflow-wrap-break-word flex">
             {wordsArray.map((text,index)=>{
                 return (
-                    <div key={index} className="pr-3" ref={(element)=>{
+                    <div key={index} className="pr-4 text-2xl font-serif" ref={(element)=>{
                                                                 wordsArrayRef.current[index]= element
                     }} >
                         {text.split("").map((char)=>{
                             return(
-                                <span className="">{char}</span>
+                                <span className="pl-[2px]">{char}</span>
                             )
                         })}
                     </div>
