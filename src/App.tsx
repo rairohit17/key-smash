@@ -12,7 +12,7 @@ function App() {
 
   return (
     
-    <div style={{backgroundColor:theme.background,color:theme.primary }} className={`min-h-screen max-h-screen grid `}>
+    <div style={{backgroundColor:theme.background}} className={`min-h-screen max-h-screen grid `}>
     {/* <!-- Header --> */}
     <Header />
   

@@ -40,7 +40,7 @@ export default function Footer(){
         <div className="flex justify-between p-4 mx-[20%]">
         <div style={{color:currentTheme.primary}}>footer</div>
             <DropdownMenu  >
-        <DropdownMenuTrigger style={{color:currentTheme.primary}}  className=" hover:opacity-65 border-none px-5">Change Theme</DropdownMenuTrigger>
+        <DropdownMenuTrigger style={{color:currentTheme.primary}}  className=" hover:opacity-65 border-none px-5">{(currentTheme.name)}</DropdownMenuTrigger>
         <DropdownMenuContent style={{backgroundColor:currentTheme.background}}  className="bg-black text-white">
         <DropdownMenuLabel style={{color:currentTheme.primary}}>THEMES</DropdownMenuLabel>
         <DropdownMenuSeparator />
