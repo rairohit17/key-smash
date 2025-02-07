@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
     darkMode: ["class"],
     content: [
@@ -7,6 +8,10 @@ export default {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			orbitron: ['Orbitron', 'sans-serif'],
+			inter: ['Inter', 'sans-serif'],
+		  },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

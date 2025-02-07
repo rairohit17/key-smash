@@ -11,14 +11,16 @@ function Typing(){
     const [isOver, setIsOver] = useState(false)
     const [currWordIndex,setCurrWordIndex]= useState(0)
     const [currCharIndex,setCurrCharIndex]= useState(0)
-    const [currTime,setCurrentTime]=useState(5)
+    const [currTime,setCurrentTime]=useState(15)
     const [isActive,setIsActive]= useState(false)
     const [intervalId,setIntervalId]= useState<NodeJS.Timeout |null>( null)
     const [correctChar,setCorrectChar] = useState(0);
-    const [currInterval,setCurrInterval]= useState(5)
+    const [currInterval,setCurrInterval]= useState(15)
     const [correctWords,setCorrectWords] = useState(0);
     const [correctCharsOfWord,setCorrectCharsOfWord] = useState(0);
     const [totalChar, setTotalChar]= useState(0)
+    const [graphData,setGraphData] = useState<number[][]>([]);
+
     function updateWordsArray(){
         const array  = generate(50) as string[];
         setWordsArray(array);
@@ -45,13 +47,16 @@ function Typing(){
             if (myElementRef.current) myElementRef.current.blur() 
 
         }
-        console.log(wordsPerMinute(currInterval))
         console.log(getAccuracy())
         console.log("correctWords : ",correctWords)
         console.log("correct char : ",correctChar)
         console.log("total char : ",totalChar)
         return;
     }
+    const array = [currInterval-currTime,wordsPerMinute(currInterval-currTime)]
+    const state= graphData
+        state.push(array)
+        setGraphData(state)
     const interval = setInterval(()=>{
             setCurrentTime((currTime)=>currTime-1)
 
@@ -182,6 +187,7 @@ function Typing(){
         if(intervalId!=null){
             clearInterval(intervalId)
         }
+        setGraphData([])
         setCurrCharIndex(0);
         setCurrWordIndex(0);
         setCorrectChar(0)
@@ -211,7 +217,7 @@ function Typing(){
             </div>
             </div>
         <div onClick={handleDivClick} style={{color:theme.primary}}
-         className={`${ isOver==true ? "hidden": "" } flex-wrap text-wrap break-words whitespace-normal mx-auto max-w-[1000px] overflow-wrap-break-word flex`}>
+         className={`${ isOver==true ? "hidden": "" } flex-wrap   font-orbitront ext-wrap break-words whitespace-normal mx-auto max-w-[1000px] overflow-wrap-break-word flex`}>
             {wordsArray.map((text,index)=>{
                 return (
                     <div key={index} className="pr-4 text-2xl font-serif " ref={(element)=>{
@@ -226,7 +232,7 @@ function Typing(){
                 )
             })}
         </div>
-        <div   className={`${ !isOver ==true ? "hidden": "" }  text-xl text-center mt-[30px]`} ><Result WordsPerMinute={wordsPerMinute(currInterval)} Accuracy={getAccuracy()} CorrectChars ={correctChar} CorrectWords ={correctWords} TotalChar={totalChar}></Result></div>
+        <div   className={`${ !isOver ==true ? "hidden": "" }  text-xl text-center mt-[30px]`} ><Result graphData= {graphData} WordsPerMinute={wordsPerMinute(currInterval)} Accuracy={getAccuracy()} CorrectChars ={correctChar} CorrectWords ={correctWords} TotalChar={totalChar}></Result></div>
         <input onKeyDown={handleUserInput} className="text-white hide absolute opacity-0 w-0 h-0"  ref={myElementRef}  type="text"></input>
         </div>
     )

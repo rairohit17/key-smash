@@ -3,6 +3,9 @@ import { changeTheme } from "../states/theme-state"
 import { RootState } from "../store";
 import themes from "../utils/themes";
 import { Theme } from "../states/theme-state";
+import light from "../assets/GitHub_Invertocat_Light.png"
+import dark from "../assets/dark.png"
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -38,9 +41,13 @@ export default function Footer(){
         <div className="flex flex-col justify-end h-full  mb-3 ">
         
         <div className="flex justify-between p-4 mx-[20%]">
-        <div style={{color:currentTheme.primary}}>footer</div>
+            <a href="https://github.com/rairohit17/key-smash">
+            <img  className=" w-[30px] hover:cursor-pointer"src={light } alt="" />
+
+            </a>
+        
             <DropdownMenu  >
-        <DropdownMenuTrigger style={{color:currentTheme.primary}}  className=" hover:opacity-65 border-none px-5">{(currentTheme.name)}</DropdownMenuTrigger>
+        <DropdownMenuTrigger style={{color:currentTheme.primary}}  className=" hover:opacity-65 font-orbitron border-none text-2xl px-5">{(currentTheme.name).toUpperCase()}</DropdownMenuTrigger>
         <DropdownMenuContent style={{backgroundColor:currentTheme.background}}  className="bg-black text-white">
         <DropdownMenuLabel style={{color:currentTheme.primary}}>THEMES</DropdownMenuLabel>
         <DropdownMenuSeparator />

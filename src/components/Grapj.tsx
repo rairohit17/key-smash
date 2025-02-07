@@ -24,11 +24,12 @@ ChartJS.register(
 );
 
 interface GraphProps {
+  graphData:number[][],
   WordsPerMinute: number;
   accuracy: number;
 }
 
-const Graph = ({ WordsPerMinute, accuracy }: GraphProps) => {
+const Graph = ({ graphData , WordsPerMinute, accuracy }: GraphProps) => {
   console.log(accuracy);
     const theme = useSelector((state:RootState)=> state.theme)
   const options = {
@@ -70,27 +71,19 @@ const Graph = ({ WordsPerMinute, accuracy }: GraphProps) => {
       <Line
         options={options}
         data={{
-          labels: [1, 3, 5, 7, 9, 11],
+          labels: graphData.map((array)=>array[0]),
           datasets: [
             {
-              data: [2323, 3434, 4544, 6566, 6566, 4768],
+              data: graphData.map((array)=>array[1]),
               label: "WPM",
-              borderColor: theme.secondary ,
+              borderColor: theme.primary ,
               tension: 0.1,
-              backgroundColor: `${theme.secondary}33`, // Use theme.secondary with 20% opacity for the fill color
+              backgroundColor: `${theme.primary}33`, // Use theme.secondary with 20% opacity for the fill color
         borderWidth: 2, // Line width
             fill: true, // Fill area under the line
              
             },
-            {
-              data: [5233, 3434, 4554, 5566, 7566, 3768],
-              label: "Accuracy",
-              borderColor: theme.primary,
-              tension: 0.1,
-              backgroundColor: `${theme.secondary}33`, // Use theme.secondary with 20% opacity for the fill color
-              borderWidth: 2, // Line width
-                  fill: true, // Fill area under the line
-                               }
+           
           ]
         }}
       />

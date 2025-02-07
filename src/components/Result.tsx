@@ -6,6 +6,7 @@ import Graph from "./Grapj";
 
 
 interface ResultProps {
+    graphData:number[][], 
     WordsPerMinute:number,
     Accuracy:number,
     CorrectChars: number,
@@ -13,7 +14,7 @@ interface ResultProps {
     TotalChar:number,
 }
 
-function Result({WordsPerMinute,Accuracy , CorrectChars , CorrectWords, TotalChar}:ResultProps){
+function Result({graphData , WordsPerMinute,Accuracy , CorrectChars , CorrectWords, TotalChar}:ResultProps){
     const theme = useSelector((state:RootState)=>state.theme)
 
    return ( 
@@ -28,7 +29,7 @@ function Result({WordsPerMinute,Accuracy , CorrectChars , CorrectWords, TotalCha
 
     </div>
     <div>
-        <Graph WordsPerMinute={WordsPerMinute} accuracy={Accuracy}></Graph>
+        <Graph  graphData = {graphData} WordsPerMinute={WordsPerMinute} accuracy={Accuracy}></Graph>
 
     </div>
 </div>

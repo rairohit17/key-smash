@@ -1,9 +1,11 @@
-
+import { useSelector } from "react-redux";
+import {RootState} from "../store" 
 
 function Header (){
+    const theme  = useSelector((state:RootState)=> state.theme)
     return (
-        <div className=" flex-center justify-between text-center h-auto">
-            Header</div>
+        <div  style = {{color:theme.secondary}}className=" text-4xl font-orbitron flex-center mt-[30px] justify-between text-center h-auto">
+            KEY-SMASH</div>
     )
 }
 
