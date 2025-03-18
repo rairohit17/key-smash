@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
-import React from 'react';
-import Graph from './Grapj';
+import Graph from './Graph';
 
 interface ResultProps {
   graphData: number[][];
@@ -17,7 +16,6 @@ function Result({
   WordsPerMinute,
   Accuracy,
   CorrectChars,
-  CorrectWords,
   TotalChar,
 }: ResultProps) {
   const theme = useSelector((state: RootState) => state.theme);

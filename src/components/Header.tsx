@@ -13,13 +13,18 @@ import {
 import { useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { LuInfo } from 'react-icons/lu';
+import GoogleButton from 'react-google-button';
 import { toast, ToastContainer } from 'react-toastify';
-import { auth, firebaseConfig } from '../firebase.config';
+import { auth, } from '../firebase.config';
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import {
+  firebaseErrorMessages,
+  signInErrorMessages,
+} from '../utils/firebaseErrors';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 function Header() {
   const theme = useSelector((state: RootState) => state.theme);
@@ -60,7 +65,7 @@ function Header() {
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
+      .then(() => {
         toast.success(' Sign up successful ', {
           position: 'top-center',
           autoClose: 2000,
@@ -75,7 +80,10 @@ function Header() {
       })
       .catch((err) => {
         console.log(err.message);
-        toast.warn(' error occured while signup', {
+        const message =
+          firebaseErrorMessages[err.code as string] ||
+          'an unexpected error occured';
+        toast.warn(message, {
           position: 'top-center',
           autoClose: 2000,
           hideProgressBar: false,
@@ -104,7 +112,7 @@ function Header() {
       return;
     }
     signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
+      .then(() => {
         toast.success(' Login successful ', {
           position: 'top-center',
           autoClose: 2000,
@@ -118,8 +126,11 @@ function Header() {
         });
       })
       .catch((err) => {
-        console.log(err.message);
-        toast.warn(' error occured while signup', {
+        console.log(err.code);
+        let message =
+          signInErrorMessages[err.code as string] ||
+          ' an unexpected error occured please try after some time ';
+        toast.warn(message, {
           position: 'top-center',
           autoClose: 2000,
           hideProgressBar: false,
@@ -133,6 +144,36 @@ function Header() {
       });
   }
 
+  function handleGoogleLogin() {
+    const googleAuth = new GoogleAuthProvider();
+    signInWithPopup(auth, googleAuth)
+      .then(() => {
+        toast.success('  Google Login Successful ', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          style: {
+            backgroundColor: theme.background,
+            color: theme.secondary,
+          },
+        });
+      })
+      .catch(() => {
+        toast.warn('Googles Authentication Failed', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          style: {
+            backgroundColor: theme.background,
+            color: theme.secondary,
+          },
+        });
+      });
+  }
   return (
     <div className="flex justify-between mx-[100px]">
       <div
@@ -226,6 +267,7 @@ function Header() {
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setEmail(e.target.value)
                           }
+                          autoComplete="off"
                           type="email"
                           id="email"
                           placeholder="Email"
@@ -266,6 +308,11 @@ function Header() {
                         >
                           Signup
                         </button>
+                        <div className="text-center mt-2">or</div>
+                        <GoogleButton
+                          onClick={handleGoogleLogin}
+                          style={{ width: '350px' }}
+                        ></GoogleButton>
                       </div>
                     </TabsContent>
                     <TabsContent value="login">
@@ -280,6 +327,7 @@ function Header() {
                           type="email"
                           id="email"
                           placeholder="Email"
+                          autoComplete="off"
                         />
                       </div>
                       <div
@@ -304,6 +352,11 @@ function Header() {
                         >
                           Login
                         </button>
+                        <div className="text-center mt-2">or</div>
+                        <GoogleButton
+                          onClick={handleGoogleLogin}
+                          style={{ width: '350px' }}
+                        ></GoogleButton>
                       </div>
                     </TabsContent>
                   </Tabs>

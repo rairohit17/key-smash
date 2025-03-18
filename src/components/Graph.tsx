@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { Line } from 'react-chartjs-2';
@@ -29,7 +28,7 @@ interface GraphProps {
   accuracy: number;
 }
 
-const Graph = ({ graphData, WordsPerMinute, accuracy }: GraphProps) => {
+const Graph = ({ graphData, accuracy }: GraphProps) => {
   console.log(accuracy);
   const theme = useSelector((state: RootState) => state.theme);
   const options = {

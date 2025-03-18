@@ -195,6 +195,7 @@ function Typing() {
     setCorrectWords(0);
     setCorrectCharsOfWord(0);
     setIsOver(false);
+    setTotalChar(0);
   }
   function getAccuracy() {
     return Math.round((correctWords / currWordIndex) * 100);

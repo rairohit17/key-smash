@@ -4,7 +4,6 @@ import { RootState } from '../store';
 import themes from '../utils/themes';
 import { Theme } from '../states/theme-state';
 import light from '../assets/GitHub_Invertocat_Light.png';
-import dark from '../assets/dark.png';
 
 import {
   DropdownMenu,
@@ -47,7 +46,7 @@ export default function Footer() {
             style={{ color: currentTheme.primary }}
             className=" hover:opacity-65 font-orbitron border-none text-2xl px-5"
           >
-            {currentTheme.name.toUpperCase()}
+            {currentTheme.name}
           </DropdownMenuTrigger>
           <DropdownMenuContent
             style={{ backgroundColor: currentTheme.background }}
