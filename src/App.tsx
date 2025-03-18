@@ -3,9 +3,7 @@ import './App.css';
 import Typing from './components/Typing';
 import Footer from './components/Footer';
 import { RootState } from './store';
-import { useSelector, useDispatch } from 'react-redux';
-import { changeTheme } from './states/theme-state';
-import { ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
 function App() {
   let theme = useSelector((state: RootState) => state.theme);
 

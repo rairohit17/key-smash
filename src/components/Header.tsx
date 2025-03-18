@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { Input } from './ui/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
+import { IoLogOutOutline } from "react-icons/io5";
 import {
   Dialog,
   DialogTrigger,
@@ -10,7 +11,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from './ui/dialog';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 import { LuInfo } from 'react-icons/lu';
 import GoogleButton from 'react-google-button';
@@ -19,20 +20,31 @@ import { auth, } from '../firebase.config';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import {
   firebaseErrorMessages,
   signInErrorMessages,
 } from '../utils/firebaseErrors';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider  , onAuthStateChanged } from 'firebase/auth';
 
 function Header() {
   const theme = useSelector((state: RootState) => state.theme);
   const [currAuth, setCurrAuth] = useState('login');
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
+  const [authenticated , setAuthenticated] = useState<Boolean | null >()
+  
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+      setAuthenticated(true)
+      } else {
+        setAuthenticated(false)
+      }
+    });
+  }, [auth])
   // console.log(email)
   // console.log(password)
   function handleSignupClick() {
@@ -189,9 +201,9 @@ function Header() {
           style={{ color: theme.secondary }}
           className=" hover:cursor-pointer text-xl mr-[30px] "
         ></LuInfo>
-        <div>
-          <Dialog>
-            <DialogTrigger>
+        <div >
+          <Dialog >
+            <DialogTrigger className={`${authenticated ? "hidden" : "" }`}>
               <FaRegUser
                 onClick={() => setCurrAuth('login')}
                 style={{ color: theme.secondary }}
@@ -364,7 +376,12 @@ function Header() {
               </DialogHeader>
             </DialogContent>
           </Dialog>
+          <IoLogOutOutline onClick={async()=>{
+             await signOut(auth)
+          }} style={{ color: theme.secondary }} className={`${authenticated ? ``: "hidden"} text-[22px]  cursor-pointer `}></IoLogOutOutline>
+
         </div>
+
       </div>
     </div>
   );
