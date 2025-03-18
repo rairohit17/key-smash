@@ -32,7 +32,7 @@ const themes = [
     wrong: '#FF6347', // Tomato for wrong
   },
   {
-    name: 'default-terminal',
+    name: 'terminal',
     background: '#300A24', // Pinkish-purple
     primary: 'white', // White text
     secondary: 'white', // White heading

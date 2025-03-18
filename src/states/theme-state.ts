@@ -11,7 +11,7 @@ export interface Theme {
 const initialState: Theme =
   themes.filter(
     (theme) => theme.name == JSON.parse(localStorage.getItem('theme') as string)
-  )[0] || themes.filter((themes) => themes.name == 'default-terminal')[0];
+  )[0] || themes.filter((themes) => themes.name == 'retro')[0];
 
 const themeSlice = createSlice({
   name: 'theme',
