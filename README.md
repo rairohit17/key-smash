@@ -1,50 +1,41 @@
-# React + TypeScript + Vite
+# 🚀 KeySmash - Typing Speed Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Typing Speed Calculator](https://img.shields.io/badge/React-v18.2.0-blue) ![Redux](https://img.shields.io/badge/Redux-v4.2.0-purple) ![Chart.js](https://img.shields.io/badge/Chart.js-v3.9.1-green) ![Firebase](https://img.shields.io/badge/Firebase-v9.15.0-orange)
 
-Currently, two official plugins are available:
+A **Typing Speed Calculator** application built with **React**, **Redux**, and **Chart.js** to help users measure and improve their typing speed and accuracy. The application uses **Firebase** for authentication and **Firestore** as the database to store user progress and key-smash data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Real-time Typing Analysis**: Calculate typing speed (WPM), accuracy, and errors in real-time.
+- **Themes**: Multiple themes to customize the look and feel of the application.
+- **User Authentication**: Sign up, log in, and track your progress using Firebase Authentication.
+- **Progress Tracking**: Store and visualize your typing progress using Firestore and Chart.js.
+- **Custom Themes**: Feel free to raise a PR if you want to add a custom theme!
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Available Themes
 
-- Configure the top-level `parserOptions` property like this:
+The application comes with the following pre-defined themes:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Ocean Breeze
+2. Cyberpunk
+3. Forest
+4. Retro
+5. Terminal
+6. High Contrast
+7. Midnight
+8. Tokyo Night
+9. Dracula
+10. Nord
+11. Monokai
+12. Solarized Dark
+13. Gruvbox
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+If you'd like to add a custom theme, feel free to raise a Pull Request (PR) with your theme configuration!
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Technologies Used
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Frontend**: React, Redux
+- **Charting**: Chart.js
+- **Backend**: Firebase (Authentication, Firestore)
+- **Styling**: CSS (Themes)
+
